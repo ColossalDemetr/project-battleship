@@ -13,15 +13,15 @@ class Player {
 
         
 
-        if (this.attackedCells.some(
-            cell => cell[0] === x &&
-            cell [1] === y
+        if (this.attackedCells.some(cell => 
+            cell[0] === x &&
+            cell[1] === y
         )) {
             return this.attack(enemyBoard);
         } else {
             this.attackedCells.push([x, y]);
             enemyBoard.receiveAttack([x, y]);
-        }
+        };
 
     };
 
