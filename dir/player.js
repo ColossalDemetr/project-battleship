@@ -8,8 +8,8 @@ class Player {
     };
 
     attack(enemyBoard) {
-        const x = Math.floor(Math.random() * 7 + 1);
-        const y = Math.floor(Math.random() * 7 + 1);
+        const x = Math.floor(Math.random() * 10);
+        const y = Math.floor(Math.random() * 10);
 
         
 
