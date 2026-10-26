@@ -47,5 +47,11 @@ a {
 
 /* Ship cell */
 .ship-cell {
+    background-color: blue;
+}
+
+/* Missed cell */
+
+.missed-cell {
     background-color: firebrick;
 }
