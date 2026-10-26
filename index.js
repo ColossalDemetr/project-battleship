@@ -38,7 +38,7 @@ document.getElementById('random-btn').addEventListener('click', () => {
 });
 
 
-const renderBoard = (board, missedAttacks, attacksOnTarget, element) => {
+const renderBoard = (board, missedAttacks, attacksOnTarget, element, hideShips = false) => {
     
     element.innerHTML = '';
 
@@ -49,13 +49,14 @@ const renderBoard = (board, missedAttacks, attacksOnTarget, element) => {
             newDiv.dataset.rowIndex = x;
             newDiv.dataset.cellIndex = y;
             
-            if(board[x][y] !== null) newDiv.classList.add('ship-cell');
+            if (board[x][y] !== null && !hideShips) newDiv.classList.add('ship-cell');
 
             const isMissed = missedAttacks.some(cell => cell[0] === x && cell[1] === y);
             const isHit = attacksOnTarget.some(cell => cell[0] === x && cell[1] === y);
 
             if (isMissed) newDiv.classList.add('missed-cell');
             if (isHit) newDiv.classList.add('hit-cell');
+            
             element.appendChild(newDiv);
         };
     };
@@ -63,13 +64,9 @@ const renderBoard = (board, missedAttacks, attacksOnTarget, element) => {
             
   
 };
-renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('modal-board'));
-// player1.gameboard.placeShip(new Ship(4), [0, 0]);
-// player1.gameboard.placeShip(new Ship(3), [2, 0]);
+renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('modal-board'), false);
 
-// player2.gameboard.placeShip(new Ship(5), [8, 5]);
-// player2.gameboard.placeShip(new Ship(3), [2, 5]);
-
+// User attacks!!!
 document.getElementById('cpu-board').addEventListener('click', (e) => {
 
     if (gameOver) return;
@@ -84,9 +81,9 @@ document.getElementById('cpu-board').addEventListener('click', (e) => {
     const y = parseInt(e.target.dataset.cellIndex);
     // console.log(x,y)
     player2.gameboard.receiveAttack([x, y]);
-    renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'));
+    renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'), true);
     player2.attack(player1.gameboard);
-    renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'));
+    renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'), false);
 
 
     setTimeout(() => {
@@ -98,6 +95,7 @@ document.getElementById('cpu-board').addEventListener('click', (e) => {
 
 });
 
+// Game start button
 document.getElementById('start-btn').addEventListener('click', () => {
     if(player1.gameboard.board.every(row => row.every(cell => cell === null))) {
         alert('Place your ships first!');
@@ -111,8 +109,8 @@ document.getElementById('start-btn').addEventListener('click', () => {
     document.getElementById('gameName').style.display = 'flex';
 
 
-    renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'));
-    renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'));
+    renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'), false);
+    renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'), true);
 
 });
 
