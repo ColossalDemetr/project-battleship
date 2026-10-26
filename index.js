@@ -45,5 +45,8 @@ document.getElementById('cpu-board').addEventListener('click', (e) => {
     // console.log(x,y)
     player2.gameboard.receiveAttack([x, y]);
     renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, document.getElementById('cpu-board'));
+    player2.attack(player1.gameboard);
+    renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, document.getElementById('player-board'));
 });
+
 
