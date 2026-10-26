@@ -4,6 +4,7 @@ import { Gameboard } from './dir/gameboard.js';
 
 const player1 = new Player;
 const player2 = new Player;
+let gameOver = false;
 
 
 
@@ -36,11 +37,17 @@ const renderBoard = (board, missedAttacks, attacksOnTarget, element) => {
 player1.gameboard.placeShip(new Ship(4), [0, 0]);
 player1.gameboard.placeShip(new Ship(3), [2, 0]);
 
-
-renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'));
-renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'));
+player2.gameboard.placeShip(new Ship(5), [8, 5]);
+player2.gameboard.placeShip(new Ship(3), [2, 5]);
 
 document.getElementById('cpu-board').addEventListener('click', (e) => {
+
+    if (gameOver) return;
+
+    if (e.target.classList.contains('missed-cell') ||
+        e.target.classList.contains('hit-cell')
+        ) return;
+
     if (!e.target.classList.contains('gameboard-cell')) return;
 
     const x = parseInt(e.target.dataset.rowIndex);
@@ -50,6 +57,17 @@ document.getElementById('cpu-board').addEventListener('click', (e) => {
     renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'));
     player2.attack(player1.gameboard);
     renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'));
+
+
+    setTimeout(() => {
+        if (player1.gameboard.isAllSunk() || player2.gameboard.isAllSunk()) {
+            gameOver = true;
+            alert(player1.gameboard.isAllSunk() ? 'Computer wins!' : 'Player wins!');
+        };
+    }, 100)
+
 });
 
+renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'));
+renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'));
 
