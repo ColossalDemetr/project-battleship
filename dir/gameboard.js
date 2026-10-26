@@ -8,7 +8,9 @@ class Gameboard {
 
     placeShip(ship, [x, y]) {
 
-        this.board[x][y] = ship;
+        for (let i = 0; i < ship.length; i++) {
+            this.board[x][y + i] = ship;
+        };
 
     };
 

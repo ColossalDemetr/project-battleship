@@ -11,14 +11,22 @@ const renderBoard = (board, element) => {
     
     element.innerHTML = '';
 
-    for (let i = 0; i < 100; i++) {
-        const newDiv = document.createElement('div')
-        newDiv.classList.add("gameboard-cell");
-        element.appendChild(newDiv);
-    };
+    for (const row of board) {
+        for (const cell of row) {
 
-    
+            const newDiv = document.createElement("div");
+            newDiv.classList.add('gameboard-cell');
+            
+            if(cell !== null) newDiv.classList.add('ship-cell');
+            element.appendChild(newDiv);
+        };    
+    };
 };
+
+player1.gameboard.placeShip(new Ship(4), [0, 0]);
+player1.gameboard.placeShip(new Ship(3), [2, 0]);
+
 
 renderBoard(player1.gameboard.board, document.getElementById('player-board'));
 renderBoard(player2.gameboard.board, document.getElementById('cpu-board'));
+
