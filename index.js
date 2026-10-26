@@ -6,7 +6,6 @@ const player1 = new Player;
 const player2 = new Player;
 let gameOver = false;
 
-
 const randomPlacement = (gameboard) => {
     gameboard.board = Array.from({length: 10}, () => new Array(10).fill(null));
 
@@ -25,6 +24,7 @@ const randomPlacement = (gameboard) => {
         
     };
 };
+randomPlacement(player2.gameboard);
 
 document.getElementById('random-btn').addEventListener('click', () => {
     randomPlacement(player1.gameboard);
@@ -32,12 +32,11 @@ document.getElementById('random-btn').addEventListener('click', () => {
         player1.gameboard.board, 
         player1.gameboard.missedAttacks, 
         player1.gameboard.hitAttacks, 
-        document.getElementById('player-board')
+        document.getElementById('modal-board')
     );
 
 });
 
-randomPlacement(player2.gameboard);
 
 const renderBoard = (board, missedAttacks, attacksOnTarget, element) => {
     
@@ -64,7 +63,7 @@ const renderBoard = (board, missedAttacks, attacksOnTarget, element) => {
             
   
 };
-
+renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('modal-board'));
 // player1.gameboard.placeShip(new Ship(4), [0, 0]);
 // player1.gameboard.placeShip(new Ship(3), [2, 0]);
 
@@ -95,11 +94,27 @@ document.getElementById('cpu-board').addEventListener('click', (e) => {
             gameOver = true;
             alert(player1.gameboard.isAllSunk() ? 'Computer wins!' : 'Player wins!');
         };
-    }, 100)
+    }, 20);
 
 });
 
-renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'));
-renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'));
+document.getElementById('start-btn').addEventListener('click', () => {
+    if(player1.gameboard.board.every(row => row.every(cell => cell === null))) {
+        alert('Place your ships first!');
+        return;
+    };
+
+
+    document.querySelector('.wrapper').style.display = 'flex';
+    document.getElementById('modal').style.display = 'none';
+    document.getElementById('modal-overlay').style.display = 'none';
+    document.getElementById('gameName').style.display = 'flex';
+
+
+    renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'));
+    renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'));
+
+});
+
 
 
