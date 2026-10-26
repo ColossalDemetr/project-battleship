@@ -4,6 +4,7 @@ class Gameboard {
     constructor(board) {
         this.board = Array.from({length: 10}, () => new Array(10).fill(null));
         this.missedAttacks = [];
+        this.hitAttacks = [];
     };
 
     placeShip(ship, [x, y]) {
@@ -18,6 +19,7 @@ class Gameboard {
 
         if (this.board[x][y] !== null) {
             this.board[x][y].hit();
+            this.hitAttacks.push([x, y])
         } else {
             this.missedAttacks.push([x, y]);
         }; 

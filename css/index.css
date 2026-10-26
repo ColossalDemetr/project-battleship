@@ -55,3 +55,9 @@ a {
 .missed-cell {
     background-color: firebrick;
 }
+
+/* Hit cell */
+
+.hit-cell {
+    background-color: red;
+}

@@ -7,7 +7,7 @@ const player2 = new Player;
 
 
 
-const renderBoard = (board, missedAttacks, element) => {
+const renderBoard = (board, missedAttacks, attacksOnTarget, element) => {
     
     element.innerHTML = '';
 
@@ -21,7 +21,10 @@ const renderBoard = (board, missedAttacks, element) => {
             if(board[x][y] !== null) newDiv.classList.add('ship-cell');
 
             const isMissed = missedAttacks.some(cell => cell[0] === x && cell[1] === y);
+            const isHit = attacksOnTarget.some(cell => cell[0] === x && cell[1] === y);
+
             if (isMissed) newDiv.classList.add('missed-cell');
+            if (isHit) newDiv.classList.add('hit-cell');
             element.appendChild(newDiv);
         };
     };
@@ -34,8 +37,8 @@ player1.gameboard.placeShip(new Ship(4), [0, 0]);
 player1.gameboard.placeShip(new Ship(3), [2, 0]);
 
 
-renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, document.getElementById('player-board'));
-renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, document.getElementById('cpu-board'));
+renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'));
+renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'));
 
 document.getElementById('cpu-board').addEventListener('click', (e) => {
     if (!e.target.classList.contains('gameboard-cell')) return;
@@ -44,9 +47,9 @@ document.getElementById('cpu-board').addEventListener('click', (e) => {
     const y = parseInt(e.target.dataset.cellIndex);
     // console.log(x,y)
     player2.gameboard.receiveAttack([x, y]);
-    renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, document.getElementById('cpu-board'));
+    renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'));
     player2.attack(player1.gameboard);
-    renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, document.getElementById('player-board'));
+    renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'));
 });
 
 
