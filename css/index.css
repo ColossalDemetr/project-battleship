@@ -101,7 +101,15 @@ a {
 
 /* Ship cell */
 .ship-cell {
-    background-color: blue;
+    /* background: linear-gradient(135deg, #1a1a2e, #16213e); */
+}
+
+.ship-cell::before {
+    content: '⚓';
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
 }
 
 /* Missed cell */
