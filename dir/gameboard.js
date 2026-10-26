@@ -9,10 +9,16 @@ class Gameboard {
 
     placeShip(ship, [x, y]) {
 
+        if (y + ship.length > 10) return false;
+        for (let i = 0; i < ship.length; i++) {
+            if(this.board[x][y + i] !== null) return false;
+        };
+
         for (let i = 0; i < ship.length; i++) {
             this.board[x][y + i] = ship;
         };
 
+        return true;
     };
 
     receiveAttack([x, y]) {

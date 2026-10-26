@@ -14,10 +14,15 @@ const randomPlacement = (gameboard) => {
 
     for (const length of ships) {
         const newShip = new Ship(length);
-        const x = Math.floor(Math.random() * 10);
-        const y = Math.floor(Math.random() * 10);
+        let placed = false;
+        while (!placed) {
+            const x = Math.floor(Math.random() * 10);
+            const y = Math.floor(Math.random() * 10);
+            placed = gameboard.placeShip(newShip, [x, y]);
+        };
 
-        gameboard.placeShip(newShip, [x, y]);
+
+        
     };
 };
 
