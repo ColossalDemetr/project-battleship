@@ -1,6 +1,8 @@
 import { Player } from './dir/player.js';
 import { Ship } from './dir/ship.js';
 import { Gameboard } from './dir/gameboard.js';
+import { initPlacement } from './dir/logic/placement.js';
+
 
 const player1 = new Player;
 const player2 = new Player;
@@ -64,6 +66,8 @@ const renderBoard = (board, missedAttacks, attacksOnTarget, element, hideShips =
             
   
 };
+
+initPlacement(player1, renderBoard);
 renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('modal-board'), false);
 
 // User attacks!!!
@@ -113,6 +117,4 @@ document.getElementById('start-btn').addEventListener('click', () => {
     renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'), true);
 
 });
-
-
 
