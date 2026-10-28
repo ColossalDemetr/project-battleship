@@ -17,7 +17,8 @@ a {
 
 #random-btn,
 #start-btn,
-.ship-btn {
+.ship-btn,
+#clear-btn {
     padding: 1rem;
     border: none;
     border-radius: 2rem;
@@ -53,13 +54,15 @@ a {
 
 #random-btn:hover,
 #start-btn:hover,
-.ship-btn:hover {
+.ship-btn:hover,
+#clear-btn:hover {
     background-color: #c7c7c7;
 }
 
 #random-btn:active,
 #start-btn:active,
-.ship-btn:active {
+.ship-btn:active,
+#clear-btn:active {
     background-color: #9b9a9a;
     transform:scaleX(1.1)
 }
