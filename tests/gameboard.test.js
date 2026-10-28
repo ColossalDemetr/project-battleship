@@ -1,5 +1,5 @@
-import { Gameboard } from '../dir/gameboard.js';
-import { Ship } from '../dir/ship.js';
+import { Gameboard } from '../dir/classes/gameboard.js';
+import { Ship } from '../dir/classes/ship.js';
 
 test ("is the placement right?", () => {
     const gameBoard = new Gameboard();

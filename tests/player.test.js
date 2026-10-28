@@ -1,5 +1,5 @@
-import { Player } from '../dir/player.js';
-import { Gameboard } from '../dir/gameboard.js';
+import { Player } from '../dir/classes/player.js';
+import { Gameboard } from '../dir/classes/gameboard.js';
 
 test(`does a player has it's own gameboard?`, () => {
     const player = new Player();

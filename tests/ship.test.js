@@ -1,4 +1,4 @@
-import { Ship } from '../dir/ship.js'
+import { Ship } from '../dir/classes/ship.js'
 
 test ("does it have the length that's needed?", () => {
     const ship = new Ship(4);

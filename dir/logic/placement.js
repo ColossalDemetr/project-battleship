@@ -1,5 +1,5 @@
-import { Ship } from "../ship.js";
-import { Gameboard } from "../gameboard.js";
+import { Ship } from "../classes/ship.js";
+import { Gameboard } from "../classes/gameboard.js";
 
 export const initPlacement = (player1, renderBoard) => {
     let selectedShip = null;

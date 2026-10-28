@@ -1,4 +1,4 @@
-import { Gameboard } from '../dir/gameboard.js';
+import { Gameboard } from './gameboard.js';
 // import { Ship } from './ship.js';
 
 class Player {
