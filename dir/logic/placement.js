@@ -1,15 +1,28 @@
 import { Ship } from "../classes/ship.js";
 import { Gameboard } from "../classes/gameboard.js";
 
+
+const placedShip = [];
+
+// Method for clear button
+    export const clearPlacement = () => {
+        while (placedShip.length > 0) {
+            placedShip.pop();
+        };
+    };
+
 export const initPlacement = (player1, renderBoard) => {
     let selectedShip = null;
-    const placedShip = [];
 
     const destroyer = document.getElementById('destroyer-btn');
     const submarine = document.getElementById('submarine-btn');
     const cruiser = document.getElementById('cruiser-btn');
     const battleship = document.getElementById('battleship-btn');
     const carrier = document.getElementById('carrier-btn');
+
+    
+
+
 
     // 
 

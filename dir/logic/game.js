@@ -1,5 +1,5 @@
 import { Ship } from '../classes/ship.js';
-
+import { clearPlacement } from './placement.js';
 
 export const initGame = (player1, player2, renderBoard) => {
 
@@ -25,6 +25,7 @@ export const initGame = (player1, player2, renderBoard) => {
         };
     };
 
+    // Initially let the CPU place it's ships randomly
     randomPlacement(player2.gameboard);
 
     // User attacks!!!
@@ -88,5 +89,11 @@ export const initGame = (player1, player2, renderBoard) => {
 
     });
 
+
+    document.getElementById('clear-btn').addEventListener('click', () => {
+        player1.gameboard.board = Array.from({length: 10}, () => new Array(10).fill(null));
+        clearPlacement();
+        renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('modal-board'), false);
+    });
 
 };
