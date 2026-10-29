@@ -27,6 +27,11 @@ a {
     transition: 0.3s ease all;
 }
 
+.ship-btn.placed {
+    cursor: not-allowed;
+    opacity: 0.3;
+}
+
 /* Manual */
 .ships__manual__wrapper {
     display: flex;

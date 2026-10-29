@@ -5,13 +5,22 @@ import { Gameboard } from "../classes/gameboard.js";
 const placedShip = [];
 
 // Method for clear button
-    export const clearPlacement = () => {
-        while (placedShip.length > 0) {
-            placedShip.pop();
-        };
+export const clearPlacement = () => {
+    while (placedShip.length > 0) {
+        placedShip.pop();
     };
+};
 
 export const initPlacement = (player1, renderBoard) => {
+
+    const shipLengths = {
+        carrier: 5,
+        battleship: 4,
+        cruiser: 3,
+        submarine: 3,
+        destroyer: 2
+    };
+
     let selectedShip = null;
 
     const destroyer = document.getElementById('destroyer-btn');
@@ -24,8 +33,7 @@ export const initPlacement = (player1, renderBoard) => {
 
 
 
-    // 
-
+    // Manual placement
     destroyer.addEventListener('click', () => {
         if(placedShip.some(ship => ship.name === 'destroyer')) return;
         selectedShip = { name: 'destroyer', length: 2 };
@@ -46,7 +54,6 @@ export const initPlacement = (player1, renderBoard) => {
         if(placedShip.some(ship => ship.name === 'carrier')) return;
         selectedShip = { name: 'carrier', length: 5 };
     });
-
     // 
 
     document.getElementById('modal-board').addEventListener('click', (e) => {
@@ -61,14 +68,56 @@ export const initPlacement = (player1, renderBoard) => {
         
         if(placed) {
             placedShip.push(selectedShip);
-            console.log(placedShip);
+            // console.log(placedShip);
             selectedShip = null;
             renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('modal-board'), false);
         };
-
-        
-
         
     });
+
+    //
+    document.getElementById('modal-board').addEventListener('dragover', (e) => {
+        e.preventDefault();
+    });
+
+    document.getElementById('modal-board').addEventListener('drop', (e) => {
+        const shipName = e.dataTransfer.getData('text');
+        const length = shipLengths[shipName];
+
+        const x = parseInt(e.target.dataset.rowIndex);
+        const y = parseInt(e.target.dataset.cellIndex);
+
+
+        if (placedShip.some(ship => ship.name === shipName)) return;
+        const placed = player1.gameboard.placeShip(new Ship(length), [x, y]);
+
+        if(placed) {
+            placedShip.push({ name: shipName, length });
+            renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('modal-board'), false);
+            document.getElementById(`${shipName}-btn`).classList.add('placed');
+        };
+    });
+
+    // Drag&drop feature
+    destroyer.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text', 'destroyer');
+    });
+    submarine.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text', 'submarine');
+    });
+    cruiser.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text', 'cruiser');
+    });
+    battleship.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text', 'battleship');
+    });
+    carrier.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text', 'carrier');
+    });
+
+
+
+
+
 };
     
