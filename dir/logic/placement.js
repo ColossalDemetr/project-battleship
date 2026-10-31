@@ -1,5 +1,6 @@
 import { Ship } from "../classes/ship.js";
 import { Gameboard } from "../classes/gameboard.js";
+import { renderBoard } from "../ui/ui.js";
 
 
 const placedShip = [];
@@ -8,6 +9,7 @@ const placedShip = [];
 export const clearPlacement = () => {
     while (placedShip.length > 0) {
         placedShip.pop();
+        document.querySelectorAll('.ship-btn').forEach(btn => btn.classList.remove('placed'));
     };
 };
 
@@ -81,6 +83,7 @@ export const initPlacement = (player1, renderBoard) => {
     });
 
     document.getElementById('modal-board').addEventListener('drop', (e) => {
+        document.querySelectorAll('.preview-redCell').forEach(cell => cell.classList.remove('preview-redCell'));
         const shipName = e.dataTransfer.getData('text');
         const length = shipLengths[shipName];
 
@@ -98,26 +101,65 @@ export const initPlacement = (player1, renderBoard) => {
         };
     });
 
+
+    // Highlight DOM when dragging the ship !!!
+    let currentDragLength = 0;
+
     // Drag&drop feature
     destroyer.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('text', 'destroyer');
+        currentDragLength = shipLengths['destroyer'];
     });
     submarine.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('text', 'submarine');
+        currentDragLength = shipLengths['submarine'];
     });
     cruiser.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('text', 'cruiser');
+        currentDragLength = shipLengths['cruiser'];
     });
     battleship.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('text', 'battleship');
+        currentDragLength = shipLengths['battleship'];
     });
     carrier.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('text', 'carrier');
+        currentDragLength = shipLengths['carrier'];
     });
 
+    // Highlight DOM when dragging the ship !!!
 
+    document.getElementById('modal-board').addEventListener('dragenter', (e) => {
+        document.querySelectorAll('.preview-cell').forEach(cell => cell.classList.remove('preview-cell'));
+        document.querySelectorAll('.preview-redCell').forEach(cell => cell.classList.remove('preview-redCell'));
 
+        const x = parseInt(e.target.dataset.rowIndex);
+        const y = parseInt(e.target.dataset.cellIndex);
 
+        for (let i = 0; i < currentDragLength; i++) {
+            if (y + i > 9) continue;
+            if (y + currentDragLength - 1 > 9) {
+                const cell = document.querySelector(`[data-row-index="${x}"][data-cell-index="${y + i}"]`);
+                if (cell) cell.classList.add('preview-redCell');
+                
+                
+            } else {
+                const cell = document.querySelector(`[data-row-index="${x}"][data-cell-index="${y + i}"]`);
+                if (cell) {
+                    cell.classList.remove('preview-redCell')
+                    cell.classList.add('preview-cell');
+                }
+            };
+        };
+    });
 
+    // Remove the highlighting while leaving row/cell
+    document.getElementById('modal-board').addEventListener('dragleave', (e) => {
+        if (!e.currentTarget.contains(e.relatedTarget)) {
+            document.querySelectorAll('.preview-cell').forEach(cell => cell.classList.remove('preview-cell'));
+            document.querySelectorAll('.preview-redCell').forEach(cell => cell.classList.remove('preview-redCell'));
+        }
+    });
+    
 };
     
