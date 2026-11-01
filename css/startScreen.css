@@ -1,0 +1,44 @@
+.after {
+    display: none;
+}
+
+#modalForTwoPlayer {
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+    min-height: 0;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    gap: 5rem;
+}
+
+.buttons {
+    display: flex;
+    gap: 1rem;
+    /* scale: 2; */
+}
+
+.buttons button {
+    padding: 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    border: none;
+    box-shadow: 10px 10px 1rem 0 rgba(0, 0, 0, 0.3);
+
+    transition: 0.3s;
+}
+
+.buttons button:hover {
+    background-color: #d2d2d2;
+}
+
+.buttons button:active {
+    background-color: #aeaeae;
+}

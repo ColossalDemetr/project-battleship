@@ -5,6 +5,12 @@ export const initGame = (player1, player2, renderBoard) => {
 
     let gameOver = false;
 
+    document.querySelector('.one-player').addEventListener('click', () => {
+        document.getElementById('modalForTwoPlayer').style.display = 'none';
+        document.querySelector('.after').style.display = 'block';
+
+    });
+
     // Random placement button
     const randomPlacement = (gameboard) => {
         gameboard.board = Array.from({length: 10}, () => new Array(10).fill(null));

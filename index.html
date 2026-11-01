@@ -5,52 +5,71 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/modal.css">
+    <link rel="stylesheet" href="./css/startScreen.css">
     <title>Battleship</title>
 </head>
 <body>
 
-    <div id="modal-overlay">
-        <div id="modal">
-            <h2>Place your ships</h2>
-            <div id="modal-board"></div>
-            <div class="modal-btns">
-                <button id="random-btn">Random placement</button>
-                <div class="text-modal">
-                    <h2>OR</h2> 
-                </div>
-                <div class="ships__manual__wrapper">
-                    <div class="big-ship__manual__wrapper">
-                        <button id="carrier-btn" class="ship-btn" draggable="true">Carrier (5 cells)</button>
-                        <button id="battleship-btn" class="ship-btn" draggable="true">Battleship (4 cells)</button>
+
+    <div id="modalForTwoPlayer">
+        <div class="text">
+            <h1 id="gameMode">Choose your game mode:</h1>
+        </div>
+
+        <div class="buttons">
+            <button class="one-player">One player (Against CPU)</button>
+            <button class="two-players">Two players (One against another)</button>
+        </div>
+
+        
+    </div>
+
+    <div class="after">
+        <div id="modal-overlay">
+            <div id="modal">
+                <h2>Place your ships</h2>
+                <div id="modal-board"></div>
+                <div class="modal-btns">
+                    <button id="random-btn">Random placement</button>
+                    <div class="text-modal">
+                        <h2>OR</h2> 
                     </div>
-                    <div class="small-ship__manual_wrapper">
-                        <button id="cruiser-btn" class="ship-btn" draggable="true">Cruiser (3 cells)</button>
-                        <button id="submarine-btn" class="ship-btn" draggable="true">Submarine (3 cells)</button>
-                        <button id="destroyer-btn" class="ship-btn" draggable="true">Destroyer (2 cells)</button>
+                    <div class="ships__manual__wrapper">
+                        <div class="big-ship__manual__wrapper">
+                            <button id="carrier-btn" class="ship-btn" draggable="true">Carrier (5 cells)</button>
+                            <button id="battleship-btn" class="ship-btn" draggable="true">Battleship (4 cells)</button>
+                        </div>
+                        <div class="small-ship__manual_wrapper">
+                            <button id="cruiser-btn" class="ship-btn" draggable="true">Cruiser (3 cells)</button>
+                            <button id="submarine-btn" class="ship-btn" draggable="true">Submarine (3 cells)</button>
+                            <button id="destroyer-btn" class="ship-btn" draggable="true">Destroyer (2 cells)</button>
+                        </div>
+
                     </div>
 
                 </div>
+
+                <div class="bottom-btns">
+                    <button id="start-btn">Start game</button>
+                    <button id="clear-btn">Clear</button>
+                </div>
+                
 
             </div>
+        </div>
 
-            <div class="bottom-btns">
-                <button id="start-btn">Start game</button>
-                <button id="clear-btn">Clear</button>
-            </div>
-            
+
+        <h1 id="gameName">🔱 Battleship 🔱</h1>
+
+        <div class="wrapper">
+
+            <div id="player-board"></div>
+            <div id="cpu-board"></div>
 
         </div>
+        
     </div>
 
-
-    <h1 id="gameName">🔱 Battleship 🔱</h1>
-
-    <div class="wrapper">
-
-        <div id="player-board"></div>
-        <div id="cpu-board"></div>
-
-    </div>
 
     
     
