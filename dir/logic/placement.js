@@ -13,6 +13,10 @@ export const clearPlacement = () => {
     };
 };
 
+export const setActivePlayer = (player) => {
+    activePlayer = player;
+};
+
 export const initPlacement = (player1, renderBoard) => {
 
     const shipLengths = {

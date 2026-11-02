@@ -1,15 +1,36 @@
 import { Ship } from '../classes/ship.js';
-import { clearPlacement } from './placement.js';
+import { clearPlacement, initPlacement } from './placement.js';
+
+
 
 export const initGame = (player1, player2, renderBoard) => {
 
     let gameOver = false;
+    let activePlayer = player1;
+    let currentPlayer = 1;
+    let gameMode;
 
+
+    // Game mode screen - 'One player' selection
     document.querySelector('.one-player').addEventListener('click', () => {
+        gameMode = 'one-player';
         document.getElementById('modalForTwoPlayer').style.display = 'none';
         document.querySelector('.after').style.display = 'block';
-
     });
+
+    // Game mode screen - 'Two players' selection
+    document.querySelector('.two-players').addEventListener('click', () => {
+        currentPlayer = 1;
+        gameMode = 'two-players';
+        document.getElementById('modalForTwoPlayer').style.display = 'none';
+        document.querySelector('.after').style.display = 'block';
+        document.getElementById('placeYourShipsText').textContent = 'Player 1! Place your ships 🚢🛳️';
+        document.getElementById('start-btn').textContent = 'Pass to player 2';
+
+        
+    });
+
+    // Start game after player 2 placed the ships
 
     // Random placement button
     const randomPlacement = (gameboard) => {
@@ -30,9 +51,6 @@ export const initGame = (player1, player2, renderBoard) => {
             
         };
     };
-
-    // Initially let the CPU place it's ships randomly
-    randomPlacement(player2.gameboard);
 
     // User attacks!!!
     document.getElementById('cpu-board').addEventListener('click', (e) => {
@@ -76,30 +94,54 @@ export const initGame = (player1, player2, renderBoard) => {
     
     });
 
-    // Game start button
-    document.getElementById('start-btn').addEventListener('click', () => {
-        if(player1.gameboard.board.every(row => row.every(cell => cell === null))) {
-            alert('Place your ships first!');
-            return;
-        };
-
-
+    // Game start function
+    const startGame = (gameMode) => {
         document.querySelector('.wrapper').style.display = 'flex';
         document.getElementById('modal').style.display = 'none';
         document.getElementById('modal-overlay').style.display = 'none';
         document.getElementById('gameName').style.display = 'flex';
 
+        if (gameMode === 'one-player') {
+            renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'), false);
+            renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'), true);
+        } else {
+            renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'), true);
+            renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'), true);
+        };
 
-        renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'), false);
-        renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'), true);
+        
+    };
 
+    // Start button
+    document.getElementById('start-btn').addEventListener('click', () => {
+        // Empty ship placement
+        if(player1.gameboard.board.every(row => row.every(cell => cell === null))) {
+            alert('Place your ships first!');
+            return;
+        };
+        // Pass to player 2 button
+        if (currentPlayer === 1 && gameMode === 'two-players') {
+            initPlacement(player2, renderBoard)
+            currentPlayer = 2;
+            activePlayer = player2;
+            clearPlacement();
+            document.getElementById('placeYourShipsText').textContent = 'Now you, Player 2! Place your ships 🚢🛳️';
+            document.getElementById('start-btn').textContent = 'START TS OFF💨';
+            renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('modal-board'), false);
+            return;
+        };
+        // START TS OFF
+        if (currentPlayer === 2 && gameMode === 'two-players') {
+          startGame(gameMode);  
+        };
     });
 
-
+    // Clear button
     document.getElementById('clear-btn').addEventListener('click', () => {
         player1.gameboard.board = Array.from({length: 10}, () => new Array(10).fill(null));
         clearPlacement();
         renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('modal-board'), false);
     });
+
 
 };
