@@ -17,7 +17,7 @@ export const setActivePlayer = (player) => {
     activePlayer = player;
 };
 
-export const initPlacement = (player1, renderBoard) => {
+export const initPlacement = (whoIsActive, renderBoard) => {
 
     const shipLengths = {
         carrier: 5,
@@ -70,13 +70,13 @@ export const initPlacement = (player1, renderBoard) => {
         const y = parseInt(e.target.dataset.cellIndex);
 
         
-        const placed = player1.gameboard.placeShip(new Ship(selectedShip.length), [x, y]);
+        const placed = whoIsActive().gameboard.placeShip(new Ship(selectedShip.length), [x, y]);
         
         if(placed) {
             placedShip.push(selectedShip);
             // console.log(placedShip);
             selectedShip = null;
-            renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('modal-board'), false);
+            renderBoard(whoIsActive().gameboard.board, whoIsActive().gameboard.missedAttacks, whoIsActive().gameboard.hitAttacks, document.getElementById('modal-board'), false);
         };
         
     });
@@ -96,11 +96,11 @@ export const initPlacement = (player1, renderBoard) => {
 
 
         if (placedShip.some(ship => ship.name === shipName)) return;
-        const placed = player1.gameboard.placeShip(new Ship(length), [x, y]);
+        const placed = whoIsActive().gameboard.placeShip(new Ship(length), [x, y]);
 
         if(placed) {
             placedShip.push({ name: shipName, length });
-            renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('modal-board'), false);
+            renderBoard(whoIsActive().gameboard.board, whoIsActive().gameboard.missedAttacks, whoIsActive().gameboard.hitAttacks, document.getElementById('modal-board'), false);
             document.getElementById(`${shipName}-btn`).classList.add('placed');
         };
     });

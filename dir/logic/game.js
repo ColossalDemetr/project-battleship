@@ -8,6 +8,7 @@ export const initGame = (player1, player2, renderBoard) => {
     let gameOver = false;
     let activePlayer = player1;
     let currentPlayer = 1;
+    initPlacement(() => {return activePlayer}, renderBoard);
     let gameMode;
 
 
@@ -121,7 +122,6 @@ export const initGame = (player1, player2, renderBoard) => {
         };
         // Pass to player 2 button
         if (currentPlayer === 1 && gameMode === 'two-players') {
-            initPlacement(player2, renderBoard)
             currentPlayer = 2;
             activePlayer = player2;
             clearPlacement();
