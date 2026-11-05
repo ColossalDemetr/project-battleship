@@ -52,11 +52,7 @@ export const initGame = (player1, player2, renderBoard) => {
         
     });
 
-
-
-    // User attacks!!!
-    document.getElementById('cpu-board').addEventListener('click', (e) => {
-
+    const handleAttack = (e, victim, boardId) => {
         if (gameOver) return;
 
         if (e.target.classList.contains('missed-cell') ||
@@ -68,8 +64,8 @@ export const initGame = (player1, player2, renderBoard) => {
         const x = parseInt(e.target.dataset.rowIndex);
         const y = parseInt(e.target.dataset.cellIndex);
         // console.log(x,y)
-        player2.gameboard.receiveAttack([x, y]);
-        renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'), true);
+        victim.gameboard.receiveAttack([x, y]);
+        renderBoard(victim.gameboard.board, victim.gameboard.missedAttacks, victim.gameboard.hitAttacks, document.getElementById(boardId), true);
         if (gameMode === 'one-player') player2.attack(player1.gameboard);
         if (gameMode === 'two-players') {
             renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'), true);
@@ -85,6 +81,12 @@ export const initGame = (player1, player2, renderBoard) => {
                 alert(player1.gameboard.isAllSunk() ? 'Computer wins!' : 'Player wins!');
             };
         }, 20);
+    };
+
+    // User attacks!!!
+    document.getElementById('cpu-board').addEventListener('click', (e) => {
+
+        handleAttack(e, player2, 'cpu-board')
 
     });
 
