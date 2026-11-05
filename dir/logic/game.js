@@ -53,6 +53,7 @@ export const initGame = (player1, player2, renderBoard) => {
     });
 
     const handleAttack = (e, victim, boardId) => {
+        if (victim === activePlayer) return;
         if (gameOver) return;
 
         if (e.target.classList.contains('missed-cell') ||
@@ -87,6 +88,13 @@ export const initGame = (player1, player2, renderBoard) => {
     document.getElementById('cpu-board').addEventListener('click', (e) => {
 
         handleAttack(e, player2, 'cpu-board')
+
+    });
+
+    document.getElementById('player-board').addEventListener('click', (e) => {
+
+        if (gameMode === 'one-player') return;
+        handleAttack(e, player1, 'player-board')
 
     });
 
