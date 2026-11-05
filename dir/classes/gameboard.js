@@ -1,5 +1,3 @@
-import { Ship } from './ship.js';
-
 class Gameboard {
     constructor(board) {
         this.board = Array.from({length: 10}, () => new Array(10).fill(null));

@@ -1,5 +1,6 @@
 import { Ship } from '../classes/ship.js';
 import { clearPlacement, initPlacement } from './placement.js';
+import { Gameboard } from '../classes/gameboard.js';
 
 
 
@@ -12,9 +13,29 @@ export const initGame = (player1, player2, renderBoard) => {
     let gameMode;
 
 
+    // Random placement button
+    const randomPlacement = (gameboard) => {
+        gameboard.board = Array.from({length: 10}, () => new Array(10).fill(null));
+
+        const ships = [5, 4, 3, 3, 2];
+
+        for (const length of ships) {
+            const newShip = new Ship(length);
+            let placed = false;
+            while (!placed) {
+                const x = Math.floor(Math.random() * 10);
+                const y = Math.floor(Math.random() * 10);
+                placed = gameboard.placeShip(newShip, [x, y]);
+            };
+            
+        };
+    };
+
+
     // Game mode screen - 'One player' selection
     document.querySelector('.one-player').addEventListener('click', () => {
         gameMode = 'one-player';
+        randomPlacement(player2.gameboard)
         document.getElementById('modalForTwoPlayer').style.display = 'none';
         document.querySelector('.after').style.display = 'block';
     });
@@ -31,27 +52,7 @@ export const initGame = (player1, player2, renderBoard) => {
         
     });
 
-    // Start game after player 2 placed the ships
 
-    // Random placement button
-    const randomPlacement = (gameboard) => {
-        gameboard.board = Array.from({length: 10}, () => new Array(10).fill(null));
-
-        const ships = [5, 4, 3, 3, 2];
-
-        for (const length of ships) {
-            const newShip = new Ship(length);
-            let placed = false;
-            while (!placed) {
-                const x = Math.floor(Math.random() * 10);
-                const y = Math.floor(Math.random() * 10);
-                placed = gameboard.placeShip(newShip, [x, y]);
-            };
-
-
-            
-        };
-    };
 
     // User attacks!!!
     document.getElementById('cpu-board').addEventListener('click', (e) => {
@@ -85,11 +86,11 @@ export const initGame = (player1, player2, renderBoard) => {
 
     // Random button for random placement on modal
     document.getElementById('random-btn').addEventListener('click', () => {
-        randomPlacement(player1.gameboard);
+        randomPlacement(activePlayer.gameboard);
         renderBoard(
-            player1.gameboard.board, 
-            player1.gameboard.missedAttacks, 
-            player1.gameboard.hitAttacks, 
+            activePlayer.gameboard.board, 
+            activePlayer.gameboard.missedAttacks, 
+            activePlayer.gameboard.hitAttacks, 
             document.getElementById('modal-board')
         );
     
@@ -116,9 +117,13 @@ export const initGame = (player1, player2, renderBoard) => {
     // Start button
     document.getElementById('start-btn').addEventListener('click', () => {
         // Empty ship placement
-        if(player1.gameboard.board.every(row => row.every(cell => cell === null))) {
+        if(activePlayer.gameboard.board.every(row => row.every(cell => cell === null))) {
             alert('Place your ships first!');
             return;
+        };
+        // Player 1
+        if (currentPlayer === 1 && gameMode === 'one-player') {
+            startGame(gameMode);
         };
         // Pass to player 2 button
         if (currentPlayer === 1 && gameMode === 'two-players') {
@@ -138,9 +143,9 @@ export const initGame = (player1, player2, renderBoard) => {
 
     // Clear button
     document.getElementById('clear-btn').addEventListener('click', () => {
-        player1.gameboard.board = Array.from({length: 10}, () => new Array(10).fill(null));
+        activePlayer.gameboard.board = Array.from({length: 10}, () => new Array(10).fill(null));
         clearPlacement();
-        renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('modal-board'), false);
+        renderBoard(activePlayer.gameboard.board, activePlayer.gameboard.missedAttacks, activePlayer.gameboard.hitAttacks, document.getElementById('modal-board'), false);
     });
 
 
