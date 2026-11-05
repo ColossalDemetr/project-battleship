@@ -70,8 +70,13 @@ export const initGame = (player1, player2, renderBoard) => {
         // console.log(x,y)
         player2.gameboard.receiveAttack([x, y]);
         renderBoard(player2.gameboard.board, player2.gameboard.missedAttacks, player2.gameboard.hitAttacks, document.getElementById('cpu-board'), true);
-        player2.attack(player1.gameboard);
-        renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'), false);
+        if (gameMode === 'one-player') player2.attack(player1.gameboard);
+        if (gameMode === 'two-players') {
+            renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'), true);
+        } else {
+            renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'), false);
+
+        };
 
 
         setTimeout(() => {
@@ -98,6 +103,7 @@ export const initGame = (player1, player2, renderBoard) => {
 
     // Game start function
     const startGame = (gameMode) => {
+        if (gameMode === 'two-players') activePlayer = player1;
         document.querySelector('.wrapper').style.display = 'flex';
         document.getElementById('modal').style.display = 'none';
         document.getElementById('modal-overlay').style.display = 'none';
