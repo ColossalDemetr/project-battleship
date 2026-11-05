@@ -66,7 +66,15 @@ export const initGame = (player1, player2, renderBoard) => {
         const y = parseInt(e.target.dataset.cellIndex);
         // console.log(x,y)
         victim.gameboard.receiveAttack([x, y]);
-        if (gameMode === 'two-players') activePlayer = victim;
+        if (gameMode === 'two-players') {
+            activePlayer = victim;
+            document.getElementById('turnText').textContent = 'Player 2, now you!';
+            
+            if (activePlayer === player1) {
+                document.getElementById('turnText').textContent = 'Player 1, STRIKE 🎯';
+            }
+            
+        };
         renderBoard(victim.gameboard.board, victim.gameboard.missedAttacks, victim.gameboard.hitAttacks, document.getElementById(boardId), true);
         if (gameMode === 'one-player') player2.attack(player1.gameboard);
         if (gameMode === 'two-players') {
@@ -125,7 +133,10 @@ export const initGame = (player1, player2, renderBoard) => {
 
     // Game start function
     const startGame = (gameMode) => {
-        if (gameMode === 'two-players') activePlayer = player1;
+        if (gameMode === 'two-players') {
+            activePlayer = player1;
+            document.getElementById('turnText').textContent = 'Player 1, strike!';
+        };
         document.querySelector('.wrapper').style.display = 'flex';
         document.getElementById('modal').style.display = 'none';
         document.getElementById('modal-overlay').style.display = 'none';
