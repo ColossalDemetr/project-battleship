@@ -66,6 +66,7 @@ export const initGame = (player1, player2, renderBoard) => {
         const y = parseInt(e.target.dataset.cellIndex);
         // console.log(x,y)
         victim.gameboard.receiveAttack([x, y]);
+        if (gameMode === 'two-players') activePlayer = victim;
         renderBoard(victim.gameboard.board, victim.gameboard.missedAttacks, victim.gameboard.hitAttacks, document.getElementById(boardId), true);
         if (gameMode === 'one-player') player2.attack(player1.gameboard);
         if (gameMode === 'two-players') {
@@ -77,10 +78,21 @@ export const initGame = (player1, player2, renderBoard) => {
 
 
         setTimeout(() => {
-            if (player1.gameboard.isAllSunk() || player2.gameboard.isAllSunk()) {
-                gameOver = true;
-                alert(player1.gameboard.isAllSunk() ? 'Computer wins!' : 'Player wins!');
+            if(gameMode === 'one-player') {
+                if (player1.gameboard.isAllSunk() || player2.gameboard.isAllSunk()) {
+                    gameOver = true;
+                    alert(player1.gameboard.isAllSunk() ? 'Computer wins!' : 'Player wins!');
+                };
+            } else {
+                if (player1.gameboard.isAllSunk()) {
+                    gameOver = true;
+                    alert('Player 2 just won the whole game!')
+                } else if (player2.gameboard.isAllSunk()) {
+                    gameOver = true;
+                    alert('Player 1 just won the game! Congrats 🎉🍾👏🏻')
+                };
             };
+            
         }, 20);
     };
 
