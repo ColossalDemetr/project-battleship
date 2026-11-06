@@ -1,5 +1,5 @@
 import { Ship } from '../classes/ship.js';
-import { clearPlacement, initPlacement } from './placement.js';
+import { clearPlacement, initPlacement, fillPlacement, placedShip } from './placement.js';
 import { Gameboard } from '../classes/gameboard.js';
 
 
@@ -29,6 +29,7 @@ export const initGame = (player1, player2, renderBoard) => {
             };
             
         };
+
     };
 
 
@@ -69,7 +70,7 @@ export const initGame = (player1, player2, renderBoard) => {
         if (gameMode === 'two-players') {
             activePlayer = victim;
             document.getElementById('turnText').textContent = 'Player 2, now you!';
-            
+
             if (activePlayer === player1) {
                 document.getElementById('turnText').textContent = 'Player 1, STRIKE 🎯';
             }
@@ -121,6 +122,15 @@ export const initGame = (player1, player2, renderBoard) => {
 
     // Random button for random placement on modal
     document.getElementById('random-btn').addEventListener('click', () => {
+        clearPlacement();
+        fillPlacement (
+            { name: 'carrier', length: 5 }, 
+            { name: 'battleship', length: 4 }, 
+            { name: 'cruiser', length: 3 }, 
+            { name: 'submarine', length: 3 }, 
+            { name: 'destroyer', length: 2 }
+        );
+        
         randomPlacement(activePlayer.gameboard);
         renderBoard(
             activePlayer.gameboard.board, 

@@ -3,7 +3,7 @@ import { Gameboard } from "../classes/gameboard.js";
 import { renderBoard } from "../ui/ui.js";
 
 
-const placedShip = [];
+export const placedShip = [];
 
 // Method for clear button
 export const clearPlacement = () => {
@@ -13,6 +13,16 @@ export const clearPlacement = () => {
     };
 };
 
+// Something similar to .push() for placedShip
+
+export const fillPlacement = (...ships) => {
+    placedShip.push(...ships)
+    ships.forEach(ship => {
+        document.getElementById(`${ship.name}-btn`).classList.add('placed');
+    });
+};
+
+// Set active player method
 export const setActivePlayer = (player) => {
     activePlayer = player;
 };
@@ -103,6 +113,7 @@ export const initPlacement = (whoIsActive, renderBoard) => {
             renderBoard(whoIsActive().gameboard.board, whoIsActive().gameboard.missedAttacks, whoIsActive().gameboard.hitAttacks, document.getElementById('modal-board'), false);
             document.getElementById(`${shipName}-btn`).classList.add('placed');
         };
+
     });
 
 
@@ -150,9 +161,9 @@ export const initPlacement = (whoIsActive, renderBoard) => {
             } else {
                 const cell = document.querySelector(`[data-row-index="${x}"][data-cell-index="${y + i}"]`);
                 if (cell) {
-                    cell.classList.remove('preview-redCell')
+                    cell.classList.remove('preview-redCell');
                     cell.classList.add('preview-cell');
-                }
+                };
             };
         };
     });
