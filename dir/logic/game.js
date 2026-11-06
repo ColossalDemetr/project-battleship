@@ -53,6 +53,35 @@ export const initGame = (player1, player2, renderBoard) => {
         
     });
 
+    const checkWinner = () => {
+        if(gameMode === 'one-player') {
+            if (player1.gameboard.isAllSunk() || player2.gameboard.isAllSunk()) {
+                gameOver = true;
+            };
+        } else {
+            if (player1.gameboard.isAllSunk()) {
+                gameOver = true;
+            } else if (player2.gameboard.isAllSunk()) {
+                gameOver = true;
+            };
+        };
+
+        setTimeout(() => {
+            if(gameMode === 'one-player') {
+                if (player1.gameboard.isAllSunk() || player2.gameboard.isAllSunk()) {
+                    alert(player1.gameboard.isAllSunk() ? 'Computer wins!' : 'Player wins!');
+                };
+            } else {
+                if (player1.gameboard.isAllSunk()) {
+                    alert('Player 2 just won the whole game!')
+                } else if (player2.gameboard.isAllSunk()) {
+                    alert('Player 1 just won the game! Congrats 🎉🍾👏🏻')
+                };
+            };
+            
+        }, 10);
+    };
+
     const handleAttack = (e, victim, boardId) => {
         if (victim === activePlayer) return;
         if (gameOver) return;
@@ -67,6 +96,7 @@ export const initGame = (player1, player2, renderBoard) => {
         const y = parseInt(e.target.dataset.cellIndex);
         // console.log(x,y)
         victim.gameboard.receiveAttack([x, y]);
+        checkWinner();
         if (gameMode === 'two-players') {
             activePlayer = victim;
             document.getElementById('turnText').textContent = 'Player 2, now you!';
@@ -77,7 +107,10 @@ export const initGame = (player1, player2, renderBoard) => {
             
         };
         renderBoard(victim.gameboard.board, victim.gameboard.missedAttacks, victim.gameboard.hitAttacks, document.getElementById(boardId), true);
-        if (gameMode === 'one-player') player2.attack(player1.gameboard);
+        if (gameMode === 'one-player' && !gameOver) {
+            player2.attack(player1.gameboard);
+            checkWinner();
+        };
         if (gameMode === 'two-players') {
             renderBoard(player1.gameboard.board, player1.gameboard.missedAttacks, player1.gameboard.hitAttacks, document.getElementById('player-board'), true);
         } else {
@@ -85,24 +118,6 @@ export const initGame = (player1, player2, renderBoard) => {
 
         };
 
-
-        setTimeout(() => {
-            if(gameMode === 'one-player') {
-                if (player1.gameboard.isAllSunk() || player2.gameboard.isAllSunk()) {
-                    gameOver = true;
-                    alert(player1.gameboard.isAllSunk() ? 'Computer wins!' : 'Player wins!');
-                };
-            } else {
-                if (player1.gameboard.isAllSunk()) {
-                    gameOver = true;
-                    alert('Player 2 just won the whole game!')
-                } else if (player2.gameboard.isAllSunk()) {
-                    gameOver = true;
-                    alert('Player 1 just won the game! Congrats 🎉🍾👏🏻')
-                };
-            };
-            
-        }, 20);
     };
 
     // User attacks!!!
