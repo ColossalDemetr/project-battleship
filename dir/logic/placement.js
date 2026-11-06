@@ -84,6 +84,7 @@ export const initPlacement = (whoIsActive, renderBoard) => {
         
         if(placed) {
             placedShip.push(selectedShip);
+            document.getElementById(`${selectedShip.name}-btn`).classList.add('placed');
             // console.log(placedShip);
             selectedShip = null;
             renderBoard(whoIsActive().gameboard.board, whoIsActive().gameboard.missedAttacks, whoIsActive().gameboard.hitAttacks, document.getElementById('modal-board'), false);

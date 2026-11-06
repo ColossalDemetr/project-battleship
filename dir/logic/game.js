@@ -165,8 +165,8 @@ export const initGame = (player1, player2, renderBoard) => {
 
     // Start button
     document.getElementById('start-btn').addEventListener('click', () => {
-        // Empty ship placement
-        if(activePlayer.gameboard.board.every(row => row.every(cell => cell === null))) {
+        // Not all ships placed
+        if(!Array.from(document.querySelectorAll('.ship-btn')).every(ship => ship.classList.contains('placed'))) {
             alert('Place your ships first!');
             return;
         };
