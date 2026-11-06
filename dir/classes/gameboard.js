@@ -21,6 +21,13 @@ class Gameboard {
 
     receiveAttack([x, y]) {
 
+        const isAlreadyAttacked = this.hitAttacks.some(
+            cell => cell[0] === x && cell[1] === y) || this.missedAttacks.some(
+            cell => cell[0] === x && cell[1] === y
+        );
+
+        if (isAlreadyAttacked) return;
+
         if (this.board[x][y] !== null) {
             this.board[x][y].hit();
             this.hitAttacks.push([x, y])

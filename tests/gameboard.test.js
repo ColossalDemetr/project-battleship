@@ -30,8 +30,17 @@ test ("do all the ships of yours were sunked?", () => {
     const gameBoard = new Gameboard();
     gameBoard.placeShip(ship, [0,0]);
     gameBoard.receiveAttack([0,0]);
-    gameBoard.receiveAttack([0,0]);
-    gameBoard.receiveAttack([0,0]);
-    gameBoard.receiveAttack([0,0]);
+    gameBoard.receiveAttack([0,1]);
+    gameBoard.receiveAttack([0,2]);
+    gameBoard.receiveAttack([0,3]);
     expect(gameBoard.isAllSunk()).toBe(true);
+});
+
+test ("same cell hit twice counts once", () => {
+    const ship = new Ship(4);
+    const gameBoard = new Gameboard();
+    gameBoard.placeShip(ship, [0,0]);
+    gameBoard.receiveAttack([0, 0]);
+    gameBoard.receiveAttack([0, 0]);
+    expect(ship.hits).toBe(1);
 });
