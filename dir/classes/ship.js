@@ -17,9 +17,7 @@ class Ship {
     hit() {
         this.hits++;
     };
-
-
-
+    
 };
 
 export { Ship };

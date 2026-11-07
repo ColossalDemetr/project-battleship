@@ -16,3 +16,17 @@ test(`can a cpu make his own calls without repeating them?`, () => {
     computer.attack(enemyBoard);
     expect(enemyBoard.missedAttacks.length).toBe(2);
 });
+
+test (`cpu attacks every cell exactly once`, () => {
+    const computer = new Player();
+    const enemyBoard = new Gameboard();
+
+    for (let i = 0; i < 100; i++) {
+        computer.attack(enemyBoard);
+    };
+
+
+
+
+    expect(enemyBoard.missedAttacks.length).toBe(100);
+});
