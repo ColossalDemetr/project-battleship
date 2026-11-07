@@ -28,6 +28,11 @@
     grid-template-columns: 1fr 1fr 1fr;
 }
 
+.bottom-btns {
+    display: flex;
+    gap: 1rem;
+}
+
 .text-modal {
     display: flex;
     justify-content: center;
