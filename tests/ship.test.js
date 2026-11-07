@@ -16,6 +16,11 @@ test ("did the ship sunk?", () => {
     ship.hit();
     ship.hit();
     ship.hit();
-    ship.hit();
     expect(ship.isSunk()).toBe(true);
+});
+
+test ("ship is not sunk before enough hits", () => {
+    const ship = new Ship(2);
+    ship.hit();
+    expect(ship.isSunk()).toBe(false);
 });
