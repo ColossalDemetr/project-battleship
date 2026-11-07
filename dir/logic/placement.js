@@ -39,9 +39,6 @@ export const initPlacement = (whoIsActive, renderBoard) => {
     const carrier = document.getElementById('carrier-btn');
 
     
-
-
-
     // Manual placement
     destroyer.addEventListener('click', () => {
         if(placedShip.some(ship => ship.name === 'destroyer')) return;
