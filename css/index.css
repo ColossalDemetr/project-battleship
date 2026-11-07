@@ -90,7 +90,7 @@ a {
 
 /* Missed cell */
 .missed-cell {
-    background-color: firebrick;
+    background-color: #6cb2e1;
 }
 
 /* Hit cell */
