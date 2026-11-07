@@ -1,5 +1,4 @@
 import { Gameboard } from './gameboard.js';
-// import { Ship } from './ship.js';
 
 class Player {
     constructor() {
@@ -61,7 +60,7 @@ class Player {
         } else {
             this.attackedCells.push([x, y]);
 
-            // Smart AI
+            
             const previousHitCount = enemyBoard.hitAttacks.length;
             enemyBoard.receiveAttack([x, y]);
             if (enemyBoard.hitAttacks.length > previousHitCount) {

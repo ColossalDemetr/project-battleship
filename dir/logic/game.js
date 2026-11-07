@@ -1,6 +1,5 @@
 import { Ship } from '../classes/ship.js';
-import { clearPlacement, initPlacement, fillPlacement, placedShip } from './placement.js';
-import { Gameboard } from '../classes/gameboard.js';
+import { clearPlacement, initPlacement, fillPlacement } from './placement.js';
 
 
 

@@ -1,9 +1,7 @@
 import { Ship } from "../classes/ship.js";
-import { Gameboard } from "../classes/gameboard.js";
-import { renderBoard } from "../ui/ui.js";
 
 
-export const placedShip = [];
+const placedShip = [];
 
 // Method for clear button
 export const clearPlacement = () => {
@@ -20,11 +18,6 @@ export const fillPlacement = (...ships) => {
     ships.forEach(ship => {
         document.getElementById(`${ship.name}-btn`).classList.add('placed');
     });
-};
-
-// Set active player method
-export const setActivePlayer = (player) => {
-    activePlayer = player;
 };
 
 export const initPlacement = (whoIsActive, renderBoard) => {
